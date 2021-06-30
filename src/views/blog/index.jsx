@@ -28,7 +28,7 @@ const Blog = (props) => {
           <Image className="blog-details-cover" src={post.cover} fluid />
           <div className="d-flex">
             <h1 className="blog-details-title me-auto">{post.title}</h1>
-            <a href={`${BACKEND_URL}${post._id}/pdf`}>
+            <a href={`${BACKEND_URL}posts/${post._id}/pdf`}>
               <button className="pdfBtn">Download As PDF</button>
             </a>
           </div>
