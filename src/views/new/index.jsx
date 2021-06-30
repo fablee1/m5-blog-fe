@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import "react-quill/dist/quill.snow.css"
 import ReactQuill from "react-quill"
-import { Container, Form, Button } from "react-bootstrap"
+import { Container, Form, Button, Col, Row } from "react-bootstrap"
 import "./styles.css"
 import { BACKEND_URL } from "./../../env.js"
 
@@ -12,11 +12,43 @@ const NewBlogPost = (props) => {
     category: "",
     title: "",
     cover: "",
-    readTime: {},
     author: "",
     content: "",
   })
   const [newCategory, setNewCategory] = useState(false)
+
+  const [cover, setCover] = useState(null)
+  const [coverURL, setCoverURL] = useState(null)
+
+  const [fileTypeSelected, setFileTypeSelected] = useState(null)
+
+  const postImage = async (type, id) => {
+    let options
+    if (type === "url") {
+      options = {
+        method: "POST",
+        body: JSON.stringify({ url: coverURL }),
+        headers: { "Content-Type": "application/json" },
+      }
+    } else {
+      const formData = new FormData()
+      formData.append("cover", cover)
+      options = {
+        method: "POST",
+        body: formData,
+      }
+    }
+
+    const response = await fetch(
+      BACKEND_URL + "posts/" + id + "/upload",
+      options
+    )
+    if (response.ok) {
+      console.log("ok")
+    } else {
+      console.log(response)
+    }
+  }
 
   const fetchPost = async (id) => {
     const response = await fetch(BACKEND_URL + "posts/" + id)
@@ -70,7 +102,8 @@ const NewBlogPost = (props) => {
       },
     })
     if (response.ok) {
-      console.log("ok")
+      const data = await response.json()
+      return data
     } else {
       console.log(response)
     }
@@ -85,7 +118,8 @@ const NewBlogPost = (props) => {
       },
     })
     if (response.ok) {
-      console.log("ok")
+      const data = await response.json()
+      return data
     } else {
       console.log(response)
     }
@@ -93,13 +127,39 @@ const NewBlogPost = (props) => {
 
   const handlePost = async (e) => {
     e.preventDefault()
-
+    let id
     if (!props.match.params.id) {
-      await postPost()
+      const data = await postPost()
+      id = data._id
     } else {
-      await editPost()
+      const data = await editPost()
+      id = data._id
+    }
+    if (fileTypeSelected !== null) {
+      await postImage(fileTypeSelected, id)
     }
     props.history.push("/")
+  }
+
+  const changeFileType = (e) => {
+    console.log(fileTypeSelected)
+    if (e.target.id === "coverURL") {
+      if (e.target.value.length === 0) {
+        setFileTypeSelected(null)
+        setCoverURL(null)
+      } else {
+        setFileTypeSelected("url")
+        setCoverURL(e.target.value)
+      }
+    } else {
+      if (e.target.files.length === 0) {
+        setFileTypeSelected(null)
+        setCover(null)
+      } else {
+        setFileTypeSelected("file")
+        setCover(e.target.files[0])
+      }
+    }
   }
 
   return (
@@ -152,15 +212,41 @@ const NewBlogPost = (props) => {
               ))}
           </Form.Control>
         </Form.Group>
-        <Form.Group controlId="cover" className="mt-3">
-          <Form.Label>Cover URL</Form.Label>
-          <Form.Control
-            size="lg"
-            placeholder="URL"
-            value={form.cover}
-            onChange={(e) => changeForm(e)}
-          />
-        </Form.Group>
+        <Row>
+          <Col>
+            <Form.Group controlId="coverURL" className="mt-3">
+              <Form.Label>Cover URL</Form.Label>
+              <Form.Control
+                size="lg"
+                placeholder="URL"
+                value={coverURL}
+                onChange={(e) => {
+                  changeFileType(e)
+                }}
+                disabled={fileTypeSelected === "file"}
+              />
+            </Form.Group>
+          </Col>
+          <Col className="d-flex justify-content-center align-items-end">
+            <h2>OR</h2>
+          </Col>
+          <Col>
+            <Form.Group controlId="cover" className="mt-3">
+              <Form.Label>File</Form.Label>
+              <div className="d-flex align-items-center input-file-holder">
+                <Form.Control
+                  size="lg"
+                  type="file"
+                  onChange={(e) => {
+                    changeForm(e)
+                    changeFileType(e)
+                  }}
+                  disabled={fileTypeSelected === "url"}
+                />
+              </div>
+            </Form.Group>
+          </Col>
+        </Row>
         <Form.Group controlId="content" className="mt-3">
           <Form.Label>Blog Content</Form.Label>
           <ReactQuill
