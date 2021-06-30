@@ -69,7 +69,7 @@ const NewBlogPost = (props) => {
       },
     })
     if (response.ok) {
-      const data = await response.json()
+      console.log("ok")
     } else {
       console.log(response)
     }
@@ -84,7 +84,7 @@ const NewBlogPost = (props) => {
       },
     })
     if (response.ok) {
-      const data = await response.json()
+      console.log("ok")
     } else {
       console.log(response)
     }
