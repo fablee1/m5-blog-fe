@@ -3,6 +3,7 @@ import "react-quill/dist/quill.snow.css"
 import ReactQuill from "react-quill"
 import { Container, Form, Button } from "react-bootstrap"
 import "./styles.css"
+import { BACKEND_URL } from "./../../env.js"
 
 const NewBlogPost = (props) => {
   const [categories, setCategories] = useState(null)
@@ -18,7 +19,7 @@ const NewBlogPost = (props) => {
   const [newCategory, setNewCategory] = useState(false)
 
   const fetchPost = async (id) => {
-    const response = await fetch("http://localhost:3001/posts/" + id)
+    const response = await fetch(BACKEND_URL + "posts/" + id)
     if (response.ok) {
       const data = await response.json()
       setForm(data)
@@ -28,7 +29,7 @@ const NewBlogPost = (props) => {
   }
 
   const fetchAuthors = async () => {
-    const response = await fetch("http://localhost:3001/authors")
+    const response = await fetch(BACKEND_URL + "authors")
     if (response.ok) {
       const data = await response.json()
       setAuthors(data)
@@ -39,7 +40,7 @@ const NewBlogPost = (props) => {
   }
 
   const fetchCategories = async () => {
-    const response = await fetch("http://localhost:3001/posts")
+    const response = await fetch(BACKEND_URL + "posts")
     if (response.ok) {
       const data = await response.json()
       setCategories(Array.from(new Set(data.map((p) => p.category))))
@@ -61,7 +62,7 @@ const NewBlogPost = (props) => {
   }
 
   const postPost = async () => {
-    const response = await fetch("http://localhost:3001/posts", {
+    const response = await fetch(BACKEND_URL + "posts", {
       method: "POST",
       body: JSON.stringify(form),
       headers: {
@@ -76,7 +77,7 @@ const NewBlogPost = (props) => {
   }
 
   const editPost = async () => {
-    const response = await fetch("http://localhost:3001/posts/" + form._id, {
+    const response = await fetch(BACKEND_URL + "posts/" + form._id, {
       method: "PUT",
       body: JSON.stringify(form),
       headers: {

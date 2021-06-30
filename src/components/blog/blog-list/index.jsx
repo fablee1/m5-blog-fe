@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react"
 import { Row, Col } from "react-bootstrap"
+import { BACKEND_URL } from "../../../env.js"
 import BlogItem from "../blog-item"
 
 const BlogList = () => {
   const [posts, setPosts] = useState(null)
 
   const fetchPosts = async () => {
-    const response = await fetch("http://localhost:3001/posts")
+    const response = await fetch(BACKEND_URL + "posts")
     if (response.ok) {
       const data = await response.json()
       console.log(data)

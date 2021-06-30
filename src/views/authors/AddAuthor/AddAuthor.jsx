@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { Container, Form, Col, Button, Row } from "react-bootstrap"
 import "./styles.css"
+import { BACKEND_URL } from "./../../../env.js"
 
 const AddAuthor = (props) => {
   const [data, setData] = useState({
@@ -15,7 +16,7 @@ const AddAuthor = (props) => {
   }
 
   const fetchAuthor = async (id) => {
-    const response = await fetch("http://localhost:3001/authors/" + id)
+    const response = await fetch(BACKEND_URL + "authors/" + id)
     if (response.ok) {
       const authorData = await response.json()
       setData(authorData)
@@ -31,7 +32,7 @@ const AddAuthor = (props) => {
   }, [])
 
   const postAuthor = async () => {
-    const response = await fetch("http://localhost:3001/authors", {
+    const response = await fetch(BACKEND_URL + "authors", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
@@ -46,7 +47,7 @@ const AddAuthor = (props) => {
   }
 
   const editAuthor = async () => {
-    const response = await fetch("http://localhost:3001/authors/" + data._id, {
+    const response = await fetch(BACKEND_URL + "authors/" + data._id, {
       method: "PUT",
       body: JSON.stringify(data),
       headers: {

@@ -1,13 +1,13 @@
-import React from "react";
-import NavBar from "./components/navbar";
-import Footer from "./components/footer";
-import Home from "./views/home";
-import Blog from "./views/blog";
-import NewBlogPost from "./views/new";
-import Authors from "./views/authors";
-import { BrowserRouter, Route } from "react-router-dom";
-import AddAuthor from "./views/authors/AddAuthor/AddAuthor";
-import CheckEmail from './views/checkEmail/checkEmail';
+import React from "react"
+import NavBar from "./components/navbar"
+import Footer from "./components/footer"
+import Home from "./views/home"
+import Blog from "./views/blog"
+import NewBlogPost from "./views/new"
+import Authors from "./views/authors"
+import { BrowserRouter, Route } from "react-router-dom"
+import AddAuthor from "./views/authors/AddAuthor/AddAuthor"
+import CheckEmail from "./views/checkEmail/checkEmail"
 
 function App() {
   return (
@@ -23,7 +23,7 @@ function App() {
       <Route path="/post/edit/:id" exact component={NewBlogPost} />
       <Footer />
     </BrowserRouter>
-  );
+  )
 }
 
-export default App;
+export default App
