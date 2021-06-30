@@ -26,7 +26,12 @@ const Blog = (props) => {
       <div className="blog-details-root">
         <Container>
           <Image className="blog-details-cover" src={post.cover} fluid />
-          <h1 className="blog-details-title">{post.title}</h1>
+          <div className="d-flex">
+            <h1 className="blog-details-title me-auto">{post.title}</h1>
+            <a href={`${BACKEND_URL}${post._id}/pdf`}>
+              <button className="pdfBtn">Download As PDF</button>
+            </a>
+          </div>
 
           <div className="blog-details-container">
             <div className="blog-details-author">
