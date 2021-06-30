@@ -1,0 +1,43 @@
+.check-mail {
+    margin-top: 200px;
+}
+
+.check-mail input {
+    width: 100%;
+    font-size: 30px;
+    padding-left: 10px;
+}
+
+.check-mail button {
+    width: 150px;
+    height: 50px;
+    margin-left: 10px;
+    background-color: transparent;
+    border-radius: 10px;
+    border: 1px solid black;
+    font-size: 25px;
+    font-weight: 400;
+}
+
+.check-mail button:hover {
+    background-color: black;
+    color: white;
+}
+
+.email-check-result {
+    height: 60px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.email-check-success {
+    background-color: green;
+}
+
+.email-check-unsuccessful {
+    background-color: red;
+}

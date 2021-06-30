@@ -1,0 +1,9 @@
+.add-author-cont h1 {
+    text-align: center;
+    margin-top: 150px;
+    margin-bottom: 30px;
+}
+
+.add-author-form .form-group {
+    margin-top: 20px;
+}
