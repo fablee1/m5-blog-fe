@@ -54,7 +54,13 @@ const NewBlogPost = (props) => {
     const response = await fetch(BACKEND_URL + "posts/" + id)
     if (response.ok) {
       const data = await response.json()
-      setForm(data)
+      setForm({
+        category: data.category,
+        title: data.title,
+        cover: data.cover,
+        author: data.author._id,
+        content: data.content,
+      })
     } else {
       console.log("error fetching post")
     }
